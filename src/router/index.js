@@ -25,6 +25,11 @@ const router = createRouter({
       name: 'post',
       component: () => import('@/views/Post/index.vue')
     },
+    {
+      path: '/notfound',
+      name: 'notfound',
+      component: () => import('@/views/Notfound/index.vue')
+    },
   ]
 })
 
