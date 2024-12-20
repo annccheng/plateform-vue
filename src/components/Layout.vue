@@ -1,6 +1,19 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n'
+import { setLanguage } from '@/utils/localStorage'
 
+const { t, locale } = useI18n()
+
+const languageList = {
+  zh: 'zh_TW',
+  en: 'en_US'
+}
+const changeLanguage = () => {
+  const newLanguage = locale.value === languageList.zh ? languageList.en : languageList.zh
+  setLanguage(newLanguage)
+  locale.value = newLanguage
+}
 
 const router = useRouter()
 const changePage = (url) => (
@@ -22,7 +35,7 @@ const changePage = (url) => (
         <input
           class="w-[500px] focus:outline-0 m-2"
           type="text"
-          placeholder="請搜尋話題"
+          :placeholder="t('search_topic')"
         />
         <i class="text-white pl-2 fa-solid fa-magnifying-glass"></i>
       </div>

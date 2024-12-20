@@ -1,0 +1,18 @@
+{
+  "username": "Username",
+  "login": "Login",
+  "logout": "Logout",
+  "username_placeholder": "Please enter valid username",
+  "password": "Password",
+  "login_success": "Login successfully",
+  "logout_success": "Logout successfully",
+  "login_fail": "Username or password have invalid value",
+  "all_board":"All board",
+  "hot_board":"Hot board",
+  "selected_board":"Selected board",
+  "all":"All",
+  "topic":"Topic",
+  "following":"Following",
+  "search_topic":"Please search the topic"
+}
+
