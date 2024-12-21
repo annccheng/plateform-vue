@@ -1,5 +1,4 @@
 <script setup>
-import Layout from '@/components/Layout.vue';
 import { reactive, onMounted, ref } from 'vue'
 import { setToken, getToken } from '@/utils/localStorage.js'
 import { userApi } from '@/api/user.js'

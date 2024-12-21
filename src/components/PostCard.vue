@@ -1,4 +1,6 @@
 <script setup>
+import { defineProps } from 'vue'
+
 defineProps({
     category: {
       type:String
@@ -16,11 +18,18 @@ defineProps({
       type:Number
     },
 })
+
+const emit = defineEmits(['cardClick'])
+
+const handleClick = () =>{
+  emit('cardClick')
+}
+
 </script>
 
 
 <template>
-  <div class="border border-solid border-gray-300">
+  <div class="border border-solid border-gray-300" @click = "handleClick" >
     <p class="text-gray-500">{{ category }}</p>
     <h3 class="font-bold text-xl">{{ title }}</h3>
     <span>{{ content }}</span>

@@ -1,12 +1,18 @@
 <script setup>
 import { Input } from 'ant-design-vue';
 import PostCard from '@/components/PostCard.vue'
-import { posts } from '@/assets/js/posts.js'
-import  Layout  from '@/components/Layout.vue';
 import { useI18n } from 'vue-i18n'
+import { ref, onMounted } from "vue"
+import { usePostStore } from '@/store/posts.js';
+
+const postStore = usePostStore()
 
 const { t, locale } = useI18n()
+const posts = ref(postStore.posts)
 
+const goToPost = (id) =>{
+  router.push('/post/${id}')
+}
 </script>
 
 
@@ -46,6 +52,7 @@ const { t, locale } = useI18n()
             :content="item.content"
             :likes="item.likes"
             :comments="item.comments"
+            @card-click = "goToPost(item.id)"
             />
         </div>
       </main>
