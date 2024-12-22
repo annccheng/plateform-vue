@@ -2,8 +2,12 @@
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n'
 import { setLanguage } from '@/utils/localStorage'
+import { useUserStore } from '@/store/user.js'
+import { computed, ref } from 'vue'
+import { message } from 'ant-design-vue';
 
 const { t, locale } = useI18n()
+const userStore = useUserStore()
 
 const languageList = {
   zh: 'zh_TW',
@@ -19,6 +23,14 @@ const router = useRouter()
 const changePage = (url) => (
   router.push(url)
 )
+
+const userName = computed(() => userStore.userName)
+const token = computed(() => userStore.token)
+const logout = () => {
+  userStore.setToken('')
+  userStore.setUserName('')
+  message.success(t('logout_success'))
+}
 </script>
 
 
@@ -40,9 +52,27 @@ const changePage = (url) => (
         <i class="text-white pl-2 fa-solid fa-magnifying-glass"></i>
       </div>
     </div>
-    <div class="text-white text-xl mt-6">
+    <div class="text-white text-xl mt-6 flex">
+      <p v-if="token" class="mr-4">Hi, {{ userName }}</p>
       <i @click="changeLanguage" class="mr-3 cursor-pointer fa-solid fa-globe"></i>
-      <i class="mr-5 fa-solid fa-right-to-bracket"></i>
+      <ul class="flex">
+        <a-tooltip v-if="!token" placement="bottom">
+          <template #title>
+            <span>{{ t('login') }}</span>
+          </template>
+          <li @click="changePage('/login')">
+            <i class="fa-solid fa-user cursor-pointer"></i>
+          </li>
+        </a-tooltip>
+        <a-tooltip v-else placement="bottom">
+          <template #title>
+            <span>{{ t('logout') }}</span>
+          </template>
+          <li @click="logout">
+            <i class="fa-solid fa-right-to-bracket cursor-pointer"></i>
+          </li>
+        </a-tooltip>
+      </ul>
     </div>
   </header>
 </template>

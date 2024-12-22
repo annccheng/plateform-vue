@@ -20,18 +20,20 @@ const goToHome = () => {
   router.push('/')
 }
 
-const submit = async(e) => {
+const submit = async (e) => {
   e.preventDefault()
   try {
     const { data, code } = await userApi.login(formData.username, formData.password)
     if (code === 200) {
-      const { token } = data
-      setToken(token)
-      message.success(t("login_success"))
+      const { accessToken, firstName } = data
+      userStore.setToken(accessToken)
+      userStore.setUserName(firstName)
+      message.success(t('login_success'))
       goToHome()
     }
-  } catch(err) {
-    message.error(t("login_fail"))
+  } catch (err) {
+    console.log(err);
+    message.error(t('login_fail'))
   }
 }
 
