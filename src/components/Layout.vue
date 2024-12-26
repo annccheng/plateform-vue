@@ -37,42 +37,49 @@ const logout = () => {
 
 
 <template>
-  <header class="w-full h-[80px] bg-blue-700 sticky flex justify-between">
-    <div class="flex">
-      <div class="text-3xl text-white m-5">
-        <i class="fa-regular fa-comment"></i>
-        <span @click="changePage('/home')" class="italic cursor-pointer">Discuss more</span>
+  <div>
+    <header class="w-full h-[80px] bg-[#3E5879] flex justify-between fixed top-0 left-0 px-5">
+      <div class="flex items-center">
+        <div class="text-3xl text-white mr-5">
+          <i class="fa-regular fa-comment"></i>
+          <span @click="changePage('/home')" class="italic cursor-pointer">Discuss more</span>
+        </div>
+        <div class="flex w-[500px]">
+          <input
+            class="focus:outline-0 flex-1 py-1 pl-2"
+            type="text"
+            :placeholder="t('search_topic')"
+          />
+          <button class="border border-solid border-white w-9">
+            <i class="text-white fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
       </div>
-      <div class="w-[600px] h-[70px] m-5">
-        <input
-          class="w-[500px] focus:outline-0 m-2"
-          type="text"
-          :placeholder="t('search_topic')"
-        />
-        <i class="text-white pl-2 fa-solid fa-magnifying-glass"></i>
-      </div>
-    </div>
-    <div class="text-white text-xl mt-6 flex">
-      <p v-if="token" class="mr-4">Hi, {{ userName }}</p>
-      <i @click="changeLanguage" class="mr-3 cursor-pointer fa-solid fa-globe"></i>
-      <ul class="flex">
-        <a-tooltip v-if="!token" placement="bottom">
+      <ul class="text-white text-xl mt-6 flex">
+        <li v-if="token" class="mr-4">Hi, {{ userName }}</li>
+        <li>
+          <i @click="changeLanguage" class="mr-3 cursor-pointer fa-solid fa-globe"></i>
+        </li>
+        <li @click="changePage('/login')">
+          <a-tooltip v-if="!token" placement="bottom">
           <template #title>
             <span>{{ t('login') }}</span>
           </template>
-          <li @click="changePage('/login')">
             <i class="fa-solid fa-user cursor-pointer"></i>
-          </li>
-        </a-tooltip>
-        <a-tooltip v-else placement="bottom">
-          <template #title>
-            <span>{{ t('logout') }}</span>
-          </template>
-          <li @click="logout">
-            <i class="fa-solid fa-right-to-bracket cursor-pointer"></i>
-          </li>
-        </a-tooltip>
+          </a-tooltip>
+          <a-tooltip v-else placement="bottom">
+            <template #title>
+              <span>{{ t('logout') }}</span>
+            </template>
+            <li @click="logout">
+              <i class="fa-solid fa-right-to-bracket cursor-pointer"></i>
+            </li>
+          </a-tooltip>
+        </li>
       </ul>
-    </div>
-  </header>
+    </header>
+    <main class="pt-20">
+      <slot/>
+    </main>
+  </div>
 </template>

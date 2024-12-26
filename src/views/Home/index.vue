@@ -3,60 +3,80 @@ import { Input } from 'ant-design-vue';
 import PostCard from '@/components/PostCard.vue'
 import { useI18n } from 'vue-i18n'
 import { ref, onMounted } from "vue"
+import { useRouter } from 'vue-router'
 import { usePostStore } from '@/store/posts.js';
 
 const postStore = usePostStore()
+const router = useRouter()
 
 const { t, locale } = useI18n()
 const posts = ref(postStore.posts)
 
 const goToPost = (id) =>{
-  router.push('/post/${id}')
+  router.push(`/post/${id}`)
+}
+const categories = [
+  {
+    title: t('all'),
+    category: 'all'
+  },
+  {
+    title: t('following'),
+    category: 'following'
+  },
+  {
+    title: t('topic'),
+    category: 'topic'
+  },
+]
+const activeCategory = ref(categories[0].category)
+const handleActiveCategory = (category) => {
+  activeCategory.value = category
 }
 </script>
 
 
 <template>
-  <div>
-    <layout></layout>
-    <div class="flex h-[900px]">
-      <nav class="w-[250px] h-[1400px] bg-blue-900">
-        <ul class="text-white text-xl font-bold m-5">
-          <li>
-            <i class=" mr-3 fa-solid fa-list"></i>
-            <a href="#">{{ t('all_board')}}</a>
-          </li>
-          <li class="pt-5">
-            <i class="mr-3 fa-solid fa-fire"></i>
-            <a href="#">{{ t('hot_board')}}</a>
-          </li>
-          <li class="pt-5">
-            <i class="mr-3 fa-solid fa-person"></i>
-            <a href="#">{{ t('selected_board')}}</a>
+  <div class="flex">
+    <nav class="w-[200px] bg-[#213555] h-[calc(100vh-80px)]">
+      <ul class="text-white m-5">
+        <li class="pt-5">
+          <i class="mr-3 fa-solid fa-list"></i>
+          <a href="#">{{ t('all_board')}}</a>
+        </li>
+        <li class="pt-5">
+          <i class="mr-3 fa-solid fa-fire"></i>
+          <a href="#">{{ t('hot_board')}}</a>
+        </li>
+        <li class="pt-5">
+          <i class="mr-3 fa-solid fa-person"></i>
+          <a href="#">{{ t('selected_board')}}</a>
+        </li>
+      </ul>
+    </nav>
+    <main class="flex-1 bg-[#213555] h-[calc(100vh-80px)] overflow-y-scroll pt-6 pr-5">
+      <div class="bg-white rounded-sm px-20 py-5">
+        <ul class="flex items-center text-gray-500 text-md cursor-pointer sticky top-[-24px] bg-white border-b border-solid border-gray-200 font-bold">
+          <li @click="handleActiveCategory(item.category)" v-for="item in categories" :key="item.title" class="py-5 relative px-3 hover:text-black"
+          :class="{ 'text-black': activeCategory === item.category }"
+          >
+            {{ item.title }}
+            <div v-if="activeCategory === item.category" class="bg-[#3E5879] h-[2px] absolute bottom-0 left-0 w-full"></div>
           </li>
         </ul>
-      </nav>
-      <main class="w-full h-[1400px] bg-blue-900">
-        <div class="w-2/3 bg-white h-[1320px] mt-6 rounded-sm">
-          <div class="flex items-center text-gray-500 text-md cursor-pointer h-[40px]">
-            <span class="ml-10">{{ t('all')}}</span>
-            <span class="ml-6">{{ t('following')}}</span>
-            <span class="ml-6">{{ t('topic')}}</span>
-          </div>
-          <hr class="text-gray-500">
-            <post-card
-            v-for="(item, index) in posts"
-            :key="index"
-            :category="item.category"
-            :title="item.title"
-            :content="item.content"
-            :likes="item.likes"
-            :comments="item.comments"
-            @card-click = "goToPost(item.id)"
-            />
-        </div>
-      </main>
-    </div>
+        <post-card
+          class="mb-5 border-b border-gray-200 border-solid"
+          v-for="(item, index) in posts"
+          :key="index"
+          :category="item.category"
+          :title="item.title"
+          :content="item.content"
+          :likes="item.likes"
+          :comments="item.comments"
+          @card-click = "goToPost(item.id)"
+        />
+      </div>
+    </main>
   </div>
 </template>
 

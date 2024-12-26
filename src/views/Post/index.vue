@@ -1,10 +1,14 @@
 <script setup>
 import { postApi } from '@/api/post.js'
-import { PostCard } from '@/components/PostCard.vue'
+import PostCard from '@/components/PostCard.vue'
 import { Item } from 'ant-design-vue/es/menu';
 import { usePostStore } from '@/store/posts.js';
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
+const id = Number(route.params.id)
 const postStore = usePostStore()
+const post = postStore.posts.find(item => item.id === id)
 </script>
 
 <template>

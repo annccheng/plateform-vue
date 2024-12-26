@@ -9,18 +9,24 @@ import { useRouter } from "vue-router"
 
 const postStore = usePostStore()
 const router = useRouter()
+const posts = ref(postStore.posts)
 
 const getPosts = async () => {
   const { data } = await postApi.getPosts()
-    postStore.setPosts(data)
-    posts.value = data
+  postStore.setPosts(data)
+  posts.value = data
+}
+onMounted(() => {
+  if (!posts.value.length) {
+    getPosts()
   }
-
+})
 </script>
 
 <template>
-  <layout></layout>
-  <RouterView />
+  <layout>
+    <RouterView />
+  </layout>
 </template>
 
 <style scoped>
