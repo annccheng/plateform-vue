@@ -38,19 +38,36 @@ const handleActiveCategory = (category) => {
 
 <template>
   <div class="flex">
-    <nav class="w-[200px] bg-[#213555] h-[calc(100vh-80px)]">
+    <nav class="w-[250px] bg-[#213555] h-[calc(100vh-80px)]">
       <ul class="text-white m-5">
         <li class="pt-5">
           <i class="mr-3 fa-solid fa-list"></i>
           <a href="#">{{ t('all_board')}}</a>
         </li>
-        <li class="pt-5">
-          <i class="mr-3 fa-solid fa-fire"></i>
-          <a href="#">{{ t('hot_board')}}</a>
-        </li>
-        <li class="pt-5">
+        <p class="text-gray-400 mt-3 pl-4">追蹤看板</p>
+        <li class="pl-4">
           <i class="mr-3 fa-solid fa-person"></i>
-          <a href="#">{{ t('selected_board')}}</a>
+          <a href="#">{{ t('delicacy')}}</a>
+        </li>
+        <li class="pt-3 pl-4">
+          <i class="mr-3 fa-solid fa-person"></i>
+          <a href="#">{{ t('following_celebrities')}}</a>
+        </li>
+        <li class="pt-3 pl-4">
+          <i class="mr-3 fa-solid fa-person"></i>
+          <a href="#">{{ t('funny_things')}}</a>
+        </li>
+        <li class="pt-3 pl-4">
+          <i class="mr-3 fa-solid fa-person"></i>
+          <a href="#">{{ t('makeup')}}</a>
+        </li>
+        <li class="pt-3 pl-4">
+          <i class="mr-3 fa-solid fa-person"></i>
+          <a href="#">{{ t('games')}}</a>
+        </li>
+        <li class="pt-3 pl-4">
+          <i class="mr-3 fa-solid fa-person"></i>
+          <a href="#">{{ t('works')}}</a>
         </li>
       </ul>
     </nav>
