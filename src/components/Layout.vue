@@ -89,10 +89,14 @@ const logout = () => {
               <p @click="changPage('/all')">{{ t('all_board')}}</p>
             </li>
             <p class="text-gray-400 mt-3 pl-4">追蹤看板</p>
-            <li class="pl-4" v-for="item in followCategories" :key="item.id">
-              <i class="mr-3 fa-solid fa-person"></i>
-              <a href="#">{{ item.category }}</a>
-            </li>
+            <ul>
+              <template v-for="item in followCategories" :key="item.id">
+                <li v-if="item.isFollow" class="pl-4" >
+                  <i class="mr-3 fa-solid fa-person"></i>
+                  <a href="#">{{ item.category }}</a>
+                </li>
+              </template>
+            </ul>
           </ul>
         </nav>
         <slot/>
