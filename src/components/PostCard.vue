@@ -40,7 +40,7 @@ const handleClick = () =>{
       </div>
       <div class="ml-7">
         <i class="fa-solid fa-comment"></i>
-        <span class="ml-1">{{ comments }}</span>
+        <span class="ml-1">{{ comments.length }}</span>
       </div>
     </div>
   </div>

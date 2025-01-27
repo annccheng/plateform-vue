@@ -3,11 +3,13 @@ import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n'
 import { setLanguage } from '@/utils/localStorage'
 import { useUserStore } from '@/store/user.js'
+import { usePostStore } from '@/store/posts'
 import { computed, ref } from 'vue'
 import { message } from 'ant-design-vue';
 
 const { t, locale } = useI18n()
 const userStore = useUserStore()
+const postStore = usePostStore()
 
 const languageList = {
   zh: 'zh_TW',
@@ -24,6 +26,7 @@ const changePage = (url) => (
   router.push(url)
 )
 
+const followCategories = computed(() => postStore.followCategories)
 const userName = computed(() => userStore.userName)
 const token = computed(() => userStore.token)
 const logout = () => {
@@ -32,7 +35,6 @@ const logout = () => {
   message.success(t('logout_success'))
 }
 </script>
-
 
 
 
@@ -79,7 +81,22 @@ const logout = () => {
       </ul>
     </header>
     <main class="pt-20">
-      <slot/>
+      <div>
+        <nav class="w-[250px] bg-[#213555] h-[calc(100vh-80px)]">
+          <ul class="text-white m-5">
+            <li class="pt-5 flex items-center">
+              <i class="mr-3 fa-solid fa-list"></i>
+              <p @click="changPage('/all')">{{ t('all_board')}}</p>
+            </li>
+            <p class="text-gray-400 mt-3 pl-4">追蹤看板</p>
+            <li class="pl-4" v-for="item in followCategories" :key="item.id">
+              <i class="mr-3 fa-solid fa-person"></i>
+              <a href="#">{{ item.category }}</a>
+            </li>
+          </ul>
+        </nav>
+        <slot/>
+      </div>
     </main>
   </div>
 </template>

@@ -8,9 +8,15 @@ export const usePostStore = defineStore(
     const setPosts = (newPosts) => {
       posts.value = newPosts
     }
+    const followCategories = ref('')
+    const setFollowCategories = (categories) => {
+      followCategories.value = categories
+    }
     return {
       posts,
       setPosts,
+      followCategories,
+      setFollowCategories,
     }
   },
   {
