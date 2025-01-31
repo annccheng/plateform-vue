@@ -11,7 +11,7 @@ export const usePostStore = defineStore(
     const followCategories = ref([
       {
         id:1,
-        title:"美食",
+        category:"美食",
         isFollow:false
       },
       {

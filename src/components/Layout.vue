@@ -27,6 +27,7 @@ const changePage = (url) => (
 )
 
 const followCategories = computed(() => postStore.followCategories)
+const followStatus = computed(() => followCategories.value.some(item => item.isFollow))
 const userName = computed(() => userStore.userName)
 const token = computed(() => userStore.token)
 const logout = () => {
@@ -80,27 +81,26 @@ const logout = () => {
         </li>
       </ul>
     </header>
-    <main class="pt-20">
-      <div>
-        <nav class="w-[250px] bg-[#213555] h-[calc(100vh-80px)]">
-          <ul class="text-white m-5">
-            <li class="pt-5 flex items-center">
-              <i class="mr-3 fa-solid fa-list"></i>
-              <p @click="changPage('/all')">{{ t('all_board')}}</p>
-            </li>
-            <p class="text-gray-400 mt-3 pl-4">追蹤看板</p>
-            <ul>
-              <template v-for="item in followCategories" :key="item.id">
-                <li v-if="item.isFollow" class="pl-4" >
-                  <i class="mr-3 fa-solid fa-person"></i>
-                  <a href="#">{{ item.category }}</a>
-                </li>
-              </template>
-            </ul>
+    <main class="pt-20 flex">
+      <nav class="w-[250px] bg-[#213555] h-[calc(100vh-80px)]">
+        <ul class="text-white m-5">
+          <li class="pt-5 flex items-center cursor-pointer" @click="changePage('/all')">
+            <i class="mr-3 fa-solid fa-list"></i>
+            <p>{{ t('all_board')}}</p>
+          </li>
+          <p class="text-gray-400 mt-3 mb-1">追蹤看板</p>
+          <ul v-if="followStatus">
+            <template v-for="item in followCategories" :key="item.id">
+              <li v-if="item.isFollow" class="pl-4" >
+                <i class="mr-3 fa-solid fa-person"></i>
+                <a href="#">{{ item.category }}</a>
+              </li>
+            </template>
           </ul>
-        </nav>
-        <slot/>
-      </div>
+          <p v-else class="text-sm text-gray-300">目前無追蹤看板</p>
+        </ul>
+      </nav>
+      <slot/>
     </main>
   </div>
 </template>
